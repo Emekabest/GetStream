@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { StatusBar } from 'expo-status-bar';
 import AllScreenStyles from "../HomeScreen/AllScreen_styles";
 import { View, Text, Image, TouchableOpacity } from "react-native"
@@ -10,9 +10,14 @@ import axios from 'axios'
 import {  setHeaderMode_global } from "../HomeScreen/Header";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAvailableMovies, getMoviesFromTmdb, getGoogleDriveMovies } from "../Home/HomeFunctions";
+import * as SplashScreen from "expo-splash-screen"
 
+
+SplashScreen.preventAutoHideAsync()
 
 const AllMoviesScreen = ({navigation, route})=>{
+  const [appIsReady, setAppIsReady] = useState(false);
+
 
 
     /**This section stores users data in the local storage to be accessed from any component... */
@@ -58,7 +63,6 @@ const AllMoviesScreen = ({navigation, route})=>{
 
 
 
-
     /**This array contains movie available to be displayed and downloaded */
     const [AvailableMovies, setAvailableMovies] = useState([])
     //////////////////////////////////////////////////
@@ -71,11 +75,20 @@ const AllMoviesScreen = ({navigation, route})=>{
     const [MovieDataGoogledrive_All, setMovieDataGoogledrive_All] = useState([])
     /////////////////////////////////////
 
-    const [isLoading, setIsLoading] = useState(true)
+    // const [isLoading, setIsLoading] = useState(true)
 
 
 
-    
+
+
+
+
+    /**THIS SECTION DEALS WITH GETTING MOVIES FROM THEIR RESPECTIVE DATABASES................................................
+     * ......................................................................................................................
+     * ......................................................................................................................
+     * ......................................................................................................................
+    */
+
     /**Getting movies available in google drive................................................................... */
     useEffect(()=>{
 
@@ -91,7 +104,7 @@ const AllMoviesScreen = ({navigation, route})=>{
             
         fetchMovieData()
 
-    })
+    },[])
     /**................................................................................
      * ////////////////////////////////////////////////////////////////////////////////
      */
@@ -123,25 +136,30 @@ const AllMoviesScreen = ({navigation, route})=>{
 
 
 
-/**Getting and setting available movies to be rendered or displayed in the UI
- * ................................................................................. */
-        useEffect(()=>{
+/**Getting and setting available movies to be rendered or displayed in the UI....................... */
+    useEffect(()=>{
 
-            const fectchData = async ()=>{
+        const fectchMovieData = async ()=>{
 
-                if (!AvailableMovies.length){
-                        const availableMoviesData = await getAvailableMovies(MovieDataGoogledrive_All, MovieDataTmdb_All)
-                        setAvailableMovies(availableMoviesData)
-
-                    }
-
+            if (!AvailableMovies.length){
+                    
+                    const availableMoviesData = await getAvailableMovies(MovieDataGoogledrive_All, MovieDataTmdb_All)
+                    setAvailableMovies(availableMoviesData)
+                
             }
-            
-            fectchData()
-        },[MovieDataGoogledrive_All, MovieDataTmdb_All])
+                    
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+        
+        fectchMovieData()
+    },[MovieDataGoogledrive_All, MovieDataTmdb_All])
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -160,15 +178,24 @@ const handleSelectedMovie = ({id_tmdb, id_gdrive})=>{
 
 
 
-// if (!AvailableMovies.length){
- 
 
-// }
+
+// This tells the splash screen to hide immediately after the specified number of seconds!
+if (!appIsReady){
+    setTimeout( async()=>{
+    
+            await SplashScreen.hideAsync();
+            setAppIsReady(true)
+        
+        }, 4000)
+    }
+    ///////////////////////////////////////////////////////////////////////////
+
+    
+
 
 
 if (!AvailableMovies.length){
-
-  
 
     // setTimeout(()=>{
 
@@ -185,7 +212,7 @@ if (!AvailableMovies.length){
 
     
     return(
-        <View style = {AllScreenStyles.container}>
+        <View style = {AllScreenStyles.container} >
             <View style = {s`p-3 h-16 bg-green-800 flex justify-center`}></View>
             <View style = {AllScreenStyles.loader}>
                 <FontAwesomeIcon icon={faSpinner} size={40} color="#fff" />
@@ -195,30 +222,7 @@ if (!AvailableMovies.length){
 }
 else{
   
-    
-    
-    /**Setting movie data in a local storage....................................................*/
-    
-        const setMovieDataInLocalStoage = async ()=>{
-            try{
-                
-                await AsyncStorage.setItem('movieData-tmdb', JSON.stringify(MovieDataTmdb_All))//Sets movie data from tmdb
-                await AsyncStorage.setItem('availableMovies', JSON.stringify(AvailableMovies))//Sets available movie data 
-    
-            }
-            catch(error){
-    
-                return error
-            }
-    
-        }
-        setMovieDataInLocalStoage()
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
+        
     return(
         <View style = {AllScreenStyles.mainContainer}>
             <View style = {AllScreenStyles.mainContainerInner}>

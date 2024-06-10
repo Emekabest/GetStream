@@ -1,24 +1,20 @@
 import axios from "axios"
-import { useState } from "react"
+import { API_KEY, FOLDER_ID } from '@env'
 
 
 
 const getGoogleDriveMovies = async ()=>{
-    //////////////////////////////////////////////////////////////////////////////////////
-    const apiKey = "AIzaSyBuNXlKmw7GDgEx4ZysQQTYRweazREeevc"// api key of my googledrive console
-    const folderId = "1oh3eDKvls1CwZBHG2EFAlnG03MBqgN7a" //folderKey of folder containing movies in google drive
-    //////////////////////////////////////////////////////////
 
    /**This array contains all movies available in my google drive storage... */
    let MovieDataGoogledrive_All = []
-   /////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////
 
 
   /**Declaring and setting the variable that will contain all movie-data form google drive storage .*/
   let movieData_gDrive = []
 
   /**Getting movies available in my storage (Google drive)... */
-  const googleDrive_ApiUrl = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}`
+  const googleDrive_ApiUrl = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}`
 
  const getMovieFiles = axios.get(googleDrive_ApiUrl).then((res)=>{
       const movieFiles = res.data.files
@@ -43,7 +39,7 @@ const getGoogleDriveMovies = async ()=>{
       const promiseData = movieData_gDrive.map((movie)=>{
           /**Returns objects of the request based on each movie id and api key.....*/
           /**Automatically, the parent variable "promiseData" becomes an array of various objects */
-          return axios.get(`https://www.googleapis.com/drive/v3/files/${movie.id}?fields=description&key=${apiKey}`)
+          return axios.get(`https://www.googleapis.com/drive/v3/files/${movie.id}?fields=description&key=${API_KEY}`)
       })
 
       /**This resolves all the promises in the variable or array "promiseData" and gives out a response if the promises were resolved*/

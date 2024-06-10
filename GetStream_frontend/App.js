@@ -2,25 +2,29 @@ import React, { useState }  from 'react';
 import { Text, TouchableOpacity, View, } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
-/**Screen importation section...................... */
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+/**Screen importation section...................... */
 import AllMoviesScreen from './Pages/AllMoviesScreen/AllMoviesScreen';
 import TrendingScreen from './Pages/TrendingScreen/TrendingScreen';
 import MovieInfoScreen from './Pages/MovieInfoScreen/MovieInfoScreen';
-import { Header } from './Pages/HomeScreen/Header';
-import {NavBar} from './Pages/NavBar/NavBar';
-import {LoginScreen} from './Pages/LoginScreen/LoginScreen';
 import RegisterScreen from './Pages/RegisterScreen/RegisterScreen';
 import AdminScreen from './Pages/Admin/Admin';
 import SearchMovieScreen from './Pages/SearchMovieScreen/SearchMovieScreen';
-////////////////////////////////////////
+import { Header } from './Pages/HomeScreen/Header';
+import {NavBar} from './Pages/NavBar/NavBar';
+import {LoginScreen} from './Pages/LoginScreen/LoginScreen';
+//////////////////////////////////////////////////////////////
 import AllScreenStyles from './Pages/HomeScreen/AllScreen_styles';
 import { s } from "react-native-wind"
+
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
+
+
   
   return (
     <NavigationContainer>
@@ -41,8 +45,8 @@ export default function App() {
 
       </View>
     </NavigationContainer>
-
   );
+
 }
 
 

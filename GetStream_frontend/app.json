@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "GetStream_frontend",
+    "name": "GetStream",
     "slug": "GetStream_frontend",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
