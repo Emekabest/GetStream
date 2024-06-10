@@ -5,4 +5,4 @@ node_modules/
 zip/
 
 #files
-.env
+.env*
