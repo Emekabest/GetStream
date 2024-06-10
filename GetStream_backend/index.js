@@ -82,34 +82,34 @@ exports.handler= async (event, context) => {
                 password: encryptedPassword
               }
 
-                //Registering a new user...........
+                //Registers a new user...........
                 await collection.insertOne(User)
                 //////////////////////////////////////////////////
 
-               /**Status of the response......................................................................................*/
-          const responseStatus = {
-            db_status: pingResponse.ok ? "Database connected successfully" : "failed connecting with database",
-            status:'Account successfully created',
-            User
-            
-          }
-          //.............................................................
+                /**Status of the response......................................................................................*/
+              const responseStatus = {
+                db_status: pingResponse.ok ? "Database connected successfully" : "failed connecting with database",
+                status:'Account successfully created',
+                User
+              
+              }
+            //.............................................................
           
-          /**Response data to be sent to the client... */
-          const response = {
-            statusCode: 200,
-            body: JSON.stringify(responseStatus),
-          };
-          ///////////////////////////////////////////////
+            /**Response data to be sent to the client... */
+            const response = {
+              statusCode: 200,
+              body: JSON.stringify(responseStatus),
+            };
+            ///////////////////////////////////////////////
           
-          return response;
+            return response;
 
           }
 
 
          
       }
-      /**This condition runs when the user is requesting to sign-in into an account....................... */
+      /**This condition runs when the user is requesting to sign-in into an account.................................... */
       else if (requestContext.http.method ==='POST' && rawPath === '/login'){
 
               /**User details from the client side */
@@ -117,7 +117,7 @@ exports.handler= async (event, context) => {
               const {email, password} = userDetails
               ///////////////////////////////////////
 
-              const User =  await collection.findOne({email})//Checks if a user exist
+              const User =  await collection.findOne({email})//Checks if the user exist
               
               /** Declaring a response to be sent to the client during the sign in authentication process */
               let response = {}
@@ -136,6 +136,7 @@ exports.handler= async (event, context) => {
 
                   }
                 //////////////////////////////////////////////
+
                 
               }
               else{
