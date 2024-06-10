@@ -1,6 +1,9 @@
 const aws = require('aws-sdk');
 const { MongoClient } = require('mongodb')
 const bcrypt = require('bcryptjs')
+require('dotenv').config()
+
+
 
 
 /**Invoking lambda into this project............................................. */
@@ -31,10 +34,10 @@ lambda.invoke(params, (err, data)=>{
 
 
 // Database set up.......................................................................
-const mongodbUrl = "mongodb+srv://josephemeka2611:2xoXzeuBYmzp6w1r@userdetails.4yzofnv.mongodb.net/?retryWrites=true&w=majority&appName=UserDetails"
+const mongodbUrl = process.env.MONGODB_URL
 const client = new MongoClient(mongodbUrl)
-////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////////////////
+console.log(mongodbUrl)
 
 
 exports.handler= async (event, context) => {
