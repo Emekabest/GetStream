@@ -13,11 +13,12 @@ import { getAvailableMovies, getMoviesFromTmdb, getGoogleDriveMovies } from "../
 import * as SplashScreen from "expo-splash-screen"
 
 
+/**This function enables the splash screen in view. It prevents the splash screen from hiding when the application launches */
 SplashScreen.preventAutoHideAsync()
+/**............................................................................................ */
 
 const AllMoviesScreen = ({navigation, route})=>{
-  const [appIsReady, setAppIsReady] = useState(false);
-
+    const [appIsReady, setAppIsReady] = useState(false);
 
 
     /**This section stores users data in the local storage to be accessed from any component... */
@@ -33,7 +34,7 @@ const AllMoviesScreen = ({navigation, route})=>{
                 const {username, email, _id, } = loggedInUserData.userData
             
             
-                /**Stores the user data in the LS */
+                /**Stores the User details in the Local Storage */
                 await AsyncStorage.setItem('userData', JSON.stringify({username, email, id: _id,}));
         
             }
@@ -49,16 +50,7 @@ const AllMoviesScreen = ({navigation, route})=>{
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    const apiKey = "AIzaSyBuNXlKmw7GDgEx4ZysQQTYRweazREeevc"// api key of my googledrive console
-    const folderId = "1oh3eDKvls1CwZBHG2EFAlnG03MBqgN7a" //folderKey of folder containing movies in google drive
-    //////////////////////////////////////////////////////////
+    
 
 
 
